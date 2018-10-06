@@ -1,0 +1,25 @@
+{
+  "name": "react-reduce",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rootsher/react-reduce.git"
+  },
+  "keywords": [
+    "react",
+    "reduce",
+    "transform",
+    "filter"
+  ],
+  "author": "Konrad Kowalski <rootsher@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rootsher/react-reduce/issues"
+  },
+  "homepage": "https://github.com/rootsher/react-reduce#readme"
+}
