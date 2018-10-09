@@ -1,7 +1,12 @@
-import React, { Component } from 'react';
-import { render } from 'react-dom';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
-class Transform extends Component {
+export class Transform extends PureComponent {
+    static propTypes = {
+        transformers: PropTypes.arrayOf(PropTypes.string),
+        toTransform: PropTypes.array,
+    };
+
     constructor(...args) {
         super(...args);
 
@@ -23,79 +28,9 @@ class Transform extends Component {
         });
     }
 
-    componentDidMount() {
-        this.forceUpdate();
-    }
-
     _transform(toTransform) {
         return Object.keys(this._attached).reduce((result, name) => {
             return this._attached[name].transform(result);
         }, toTransform);
     }
 }
-
-class Filter extends Component {
-    state = {
-        value: "1",
-    };
-
-    render() {
-        return (
-            <select value={this.state.value} onChange={event => {
-                this.setState({ value: event.target.value });
-                this.props.onChange(event.target.value);
-            }}>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-        );
-    }
-
-    transform(list) {
-        return list.slice(parseInt(this.state.value));
-    }
-}
-
-class App extends Component {
-    render() {
-        return (
-            <Transform toTransform={['a', 'b', 'c']} transformers={['filter', 'filter2']}>
-                {({ response, refs, onChange }) => (
-                    <React.Fragment>
-                        <Filter ref={refs.filter} onChange={onChange}/>
-                        <Filter2 ref={refs.filter2} onChange={onChange}/>
-                        <pre>{JSON.stringify(response, null, '\t')}</pre>
-                    </React.Fragment>
-                )}
-            </Transform>
-        );
-    }
-}
-
-
-class Filter2 extends Component {
-    state = {
-        value: "2",
-    };
-
-    render() {
-        return (
-            <select value={this.state.value} onChange={event => {
-                this.setState({ value: event.target.value });
-                this.props.onChange(event.target.value);
-            }}>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-        );
-    }
-
-    transform(list) {
-        console.log(list);
-        return list.slice(parseInt(this.state.value));
-    }
-}
-
-render(<App/>, document.getElementById('root'));
